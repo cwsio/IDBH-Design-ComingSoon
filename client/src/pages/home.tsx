@@ -1,181 +1,172 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Loader2, Send } from "lucide-react";
-import { insertContactSchema } from "@shared/schema";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useCreateContact } from "@/hooks/use-contact";
 import logo from "@assets/IDBDesignLogo_1766439748813.png";
 
 export default function Home() {
-  const [submitted, setSubmitted] = useState(false);
-  const createContact = useCreateContact();
-  
-  const form = useForm({
-    resolver: zodResolver(insertContactSchema),
-    defaultValues: {
-      email: "",
-      message: "",
-    },
-  });
-
-  const onSubmit = (data: any) => {
-    createContact.mutate(data, {
-      onSuccess: () => {
-        setSubmitted(true);
-        form.reset();
-      },
-    });
-  };
-
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
       transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.15,
+        delayChildren: 0.3
       }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: { 
       y: 0, 
       opacity: 1,
-      transition: { type: "spring", stiffness: 50, damping: 20 }
+      transition: { type: "spring", stiffness: 40, damping: 20 }
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-background font-sans overflow-hidden">
-      {/* Left Content Section */}
-      <motion.div 
-        className="flex-1 flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-24 xl:px-32 relative z-10"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <div className="max-w-xl mx-auto lg:mx-0 w-full">
+    <div className="min-h-screen flex flex-col">
+      {/* Hero Section - Full viewport with background image */}
+      <section className="relative min-h-screen flex items-center justify-center">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=2992&auto=format&fit=crop"
+            alt="Elegant senior living space"
+            className="w-full h-full object-cover"
+          />
+          {/* Dark wash overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+        </div>
+
+        {/* Hero Content */}
+        <motion.div 
+          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
           {/* Logo */}
-          <motion.div variants={itemVariants} className="mb-12">
+          <motion.div variants={itemVariants} className="mb-8">
             <img 
               src={logo} 
-              alt="IDBH Design Logo" 
-              className="h-24 md:h-32 object-contain" 
+              alt="IDBH Design" 
+              className="h-16 md:h-20 mx-auto invert brightness-200"
+              data-testid="img-logo"
             />
           </motion.div>
 
-          {/* Heading */}
-          <motion.div variants={itemVariants}>
-            <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
-              Coming Soon
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground mb-6 font-display">
-              Designing spaces for <span className="text-primary">healing</span> and well-being.
-            </h1>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p variants={itemVariants} className="text-lg text-muted-foreground leading-relaxed mb-10 text-balance">
-            IDBH Design is a design firm led by Debbie Beyman that primarily focuses on healthcare design, with experience in commercial offices and multifamily projects. Our new portfolio-driven website is currently under construction.
+          {/* Tagline */}
+          <motion.p 
+            variants={itemVariants}
+            className="text-white/70 uppercase tracking-[0.3em] text-xs md:text-sm mb-6 font-light"
+            data-testid="text-tagline"
+          >
+            Spaces That Inspire Care
           </motion.p>
 
-          {/* Contact Form */}
-          <motion.div variants={itemVariants} className="bg-white/50 backdrop-blur-sm rounded-2xl border border-border/50 p-6 sm:p-8 shadow-sm">
-            {submitted ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-8"
+          {/* Main Headline */}
+          <motion.h1 
+            variants={itemVariants}
+            className="text-white text-4xl md:text-6xl lg:text-7xl font-serif leading-tight mb-8"
+            data-testid="text-headline"
+          >
+            Designing Environments<br />
+            <span className="italic">for Healing.</span>
+          </motion.h1>
+
+          {/* Subtext */}
+          <motion.p 
+            variants={itemVariants}
+            className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed"
+            data-testid="text-description"
+          >
+            IDBH Design specializes in healthcare interiors for assisted living communities, nursing homes, and senior care facilities. Our new website is coming soon.
+          </motion.p>
+
+          {/* Coming Soon Badge */}
+          <motion.div variants={itemVariants}>
+            <span 
+              className="inline-block text-white/90 text-sm uppercase tracking-[0.2em] border-b border-white/40 pb-2"
+              data-testid="text-coming-soon"
+            >
+              Website Coming Soon
+            </span>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+        >
+          <div className="w-px h-16 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
+        </motion.div>
+      </section>
+
+      {/* About Section */}
+      <section className="bg-white py-24 md:py-32">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Image Column */}
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2958&auto=format&fit=crop"
+                alt="Modern interior design"
+                className="w-full aspect-[4/5] object-cover"
+                data-testid="img-about"
+              />
+            </motion.div>
+
+            {/* Text Column */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <h2 
+                className="text-4xl md:text-5xl font-serif text-foreground mb-6"
+                data-testid="text-about-title"
               >
-                <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Send className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Message Sent!</h3>
-                <p className="text-muted-foreground mb-6">Thank you for your interest. We'll be in touch soon.</p>
-                <Button variant="outline" onClick={() => setSubmitted(false)}>
-                  Send another message
-                </Button>
-              </motion.div>
-            ) : (
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <h3 className="text-lg font-semibold mb-2">Get notified when we launch</h3>
-                
-                <div className="space-y-2">
-                  <Input 
-                    placeholder="Enter your email" 
-                    type="email"
-                    {...form.register("email")}
-                    className={form.formState.errors.email ? "border-destructive" : ""}
-                  />
-                  {form.formState.errors.email && (
-                    <p className="text-xs text-destructive pl-1">{form.formState.errors.email.message as string}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Textarea 
-                    placeholder="Optional message..." 
-                    {...form.register("message")}
-                    className="resize-none"
-                    rows={3}
-                  />
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full"
-                  disabled={createContact.isPending}
-                >
-                  {createContact.isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    "Notify Me"
-                  )}
-                </Button>
-              </form>
-            )}
-          </motion.div>
-          
-          <motion.div variants={itemVariants} className="mt-12 text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} IDBH Design. All rights reserved.
-          </motion.div>
-        </div>
-      </motion.div>
-
-      {/* Right Image Section */}
-      <motion.div 
-        className="hidden lg:block lg:w-1/2 relative bg-muted"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <div className="absolute inset-0 bg-primary/10 mix-blend-multiply z-10" />
-        
-        {/* Abstract architecture / healthcare design image from Unsplash */}
-        {/* modern minimalist interior architecture white bright */}
-        <img 
-          src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=2788&auto=format&fit=crop"
-          alt="Modern Interior Design"
-          className="w-full h-full object-cover"
-        />
-        
-        <div className="absolute bottom-12 left-12 right-12 z-20">
-          <div className="glass-panel p-6 rounded-xl inline-block">
-            <p className="text-sm font-medium text-primary-foreground/80 uppercase tracking-widest mb-1 text-black">Featured Project</p>
-            <p className="text-2xl font-display font-bold text-black">Healthcare Excellence Center</p>
+                Our Vision
+              </h2>
+              <p className="text-lg md:text-xl font-serif italic text-muted-foreground mb-8">
+                We don't just design spaces; we create environments that nurture.
+              </p>
+              <p 
+                className="text-muted-foreground leading-relaxed mb-8"
+                data-testid="text-about-description"
+              >
+                Led by Debbie Beyman, IDBH Design brings decades of expertise to healthcare interiors. We understand that assisted living facilities, nursing homes, and senior care communities require thoughtful design that balances beauty with functionality, comfort with safety.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                Our portfolio-driven approach ensures every project is visually stunning while meeting the unique needs of healthcare environments.
+              </p>
+            </motion.div>
           </div>
         </div>
-      </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-neutral-900 py-12">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <img 
+            src={logo} 
+            alt="IDBH Design" 
+            className="h-10 mx-auto mb-6 invert brightness-200 opacity-80"
+          />
+          <p className="text-neutral-400 text-sm" data-testid="text-copyright">
+            &copy; {new Date().getFullYear()} IDBH Design. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
