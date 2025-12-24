@@ -8,6 +8,26 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Domain detection endpoint for client-side routing
+  app.get("/api/site-type", (req, res) => {
+    const hostname = req.hostname || req.headers.host?.split(':')[0] || '';
+    
+    let siteType = 'design'; // default to design page
+    
+    if (hostname === 'www.idbh.com' || hostname === 'idbh.com') {
+      siteType = 'minimal';
+    } else if (hostname === 'design.idbh.com') {
+      siteType = 'design';
+    }
+    
+    // Also check query param for testing
+    if (req.query.site === 'minimal' || req.query.site === 'design') {
+      siteType = req.query.site as string;
+    }
+    
+    res.json({ siteType, hostname });
+  });
+
   app.post(api.contact.create.path, async (req, res) => {
     try {
       const input = api.contact.create.input.parse(req.body);
