@@ -91,24 +91,46 @@ export default function Home() {
             Spaces That Inspire Care
           </motion.p>
 
-          {/* Main Headline - Website Coming Soon */}
+          {/* Main Headline */}
           <motion.h1 
             variants={itemVariants}
-            className="text-white text-4xl md:text-6xl lg:text-7xl font-serif leading-tight mb-6"
+            className="text-white text-3xl md:text-5xl lg:text-6xl font-serif leading-tight mb-6"
             data-testid="text-headline"
           >
-            Website<br />
-            <span className="italic">Coming Soon.</span>
+            Website Under Construction,<br />
+            <span className="italic">Premiering Soon.</span>
           </motion.h1>
 
           {/* Subtext - Designing Environments for Healing */}
           <motion.p 
             variants={itemVariants}
-            className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed"
+            className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed"
             data-testid="text-description"
           >
             Designing environments for healing. IDBH specializes in healthcare interiors for assisted living communities, nursing homes, and senior care facilities.
           </motion.p>
+
+          {/* Contact Info */}
+          <motion.div variants={itemVariants} className="mb-12">
+            <p className="text-white/90 text-sm md:text-base mb-2">
+              <a 
+                href="mailto:info@idbh.com" 
+                className="hover:text-white transition-colors"
+                data-testid="link-email"
+              >
+                info@idbh.com
+              </a>
+            </p>
+            <p className="text-white/90 text-sm md:text-base">
+              <a 
+                href="tel:732-813-8500" 
+                className="hover:text-white transition-colors"
+                data-testid="link-phone"
+              >
+                732-813-8500
+              </a>
+            </p>
+          </motion.div>
 
           {/* Decorative line */}
           <motion.div variants={itemVariants}>
