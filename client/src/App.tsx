@@ -53,6 +53,40 @@ function Router({ siteType }: { siteType: SiteType }) {
   );
 }
 
+function updateSEOTags(siteType: SiteType) {
+  if (siteType === 'loading') return;
+  
+  if (siteType === 'minimal') {
+    document.title = 'IDBH | Investment in Healthcare Real Estate';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'IDBH specializes in investment opportunities in healthcare real estate, including assisted living communities, nursing homes, and senior care facilities.');
+    }
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'IDBH | Investment in Healthcare Real Estate');
+    }
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', 'Specializing in investment opportunities in healthcare real estate and senior care facilities.');
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', 'https://www.idbh.com/');
+    }
+  } else {
+    document.title = 'IDBH Design | Healthcare Interior Design for Senior Living & Assisted Care';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'IDBH Design specializes in healthcare interior design for assisted living communities, nursing homes, and senior care facilities. Creating environments that nurture healing and well-being.');
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', 'https://design.idbh.com/');
+    }
+  }
+}
+
 function App() {
   const [siteType, setSiteType] = useState<SiteType>('loading');
 
@@ -68,6 +102,10 @@ function App() {
     const hostnameSiteType = getSiteTypeFromHostname();
     setSiteType(hostnameSiteType);
   }, []);
+
+  useEffect(() => {
+    updateSEOTags(siteType);
+  }, [siteType]);
 
   return (
     <QueryClientProvider client={queryClient}>
