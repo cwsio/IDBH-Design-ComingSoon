@@ -57,18 +57,18 @@ function updateSEOTags(siteType: SiteType) {
   if (siteType === 'loading') return;
   
   if (siteType === 'minimal') {
-    document.title = 'IDBH | Investment in Healthcare Real Estate';
+    document.title = 'IDBH | Investment Firm';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'IDBH specializes in investment opportunities in healthcare real estate, including assisted living communities, nursing homes, and senior care facilities.');
+      metaDescription.setAttribute('content', 'IDBH is an investment firm with interests in healthcare, real estate, and related industries.');
     }
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) {
-      ogTitle.setAttribute('content', 'IDBH | Investment in Healthcare Real Estate');
+      ogTitle.setAttribute('content', 'IDBH | Investment Firm');
     }
     const ogDescription = document.querySelector('meta[property="og:description"]');
     if (ogDescription) {
-      ogDescription.setAttribute('content', 'Specializing in investment opportunities in healthcare real estate and senior care facilities.');
+      ogDescription.setAttribute('content', 'Investment firm with interests in healthcare, real estate, and related industries.');
     }
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) {
